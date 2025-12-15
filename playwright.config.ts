@@ -13,7 +13,7 @@ export default defineConfig({
     // Base URL = domain only
     baseURL: process.env.BACKOFFICE_BASE_URL,
 
-    headless: false, // keep false for now so you can see what happens
+    headless: true, // keep false for now so you can see what happens
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
     video: 'retain-on-failure',
