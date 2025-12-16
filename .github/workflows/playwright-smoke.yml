@@ -2,9 +2,9 @@ name: Playwright Smoke (Stage)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -37,12 +37,37 @@ jobs:
       - name: Run Smoke tests
         run: npx playwright test -g "@smoke"
 
+      # ---- Excel generation (Option A) ----
+      - name: Setup Python
+        if: always()
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python deps
+        if: always()
+        run: pip install openpyxl
+
+      - name: Build Excel results from JUnit
+        if: always()
+        run: python scripts/junit_to_excel.py
+
+      - name: Upload Excel results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: excel-results
+          path: test-results/playwright-results.xlsx
+          if-no-files-found: error
+
+      # ---- Reports/Artifacts ----
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
+          if-no-files-found: ignore
 
       - name: Upload test results
         if: always()
@@ -50,3 +75,4 @@ jobs:
         with:
           name: test-results
           path: test-results/
+          if-no-files-found: ignore

@@ -23,6 +23,8 @@ export default defineConfig({
   },
 
   reporter: [
-    ['html', { open: 'never' }]
+  ['list'],
+  ['html', { open: 'never' }],
+  ['junit', { outputFile: 'test-results/junit.xml' }],
   ],
 });
