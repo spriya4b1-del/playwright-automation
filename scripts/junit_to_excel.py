@@ -117,7 +117,7 @@ def main():
     autosize_columns(ws)
 
     wb.save(out_path)
-    print(f"✅ Wrote Excel results: {out_path}")
+    print(f"Wrote Excel results: {out_path}")
 
 
 if __name__ == "__main__":
